@@ -32,7 +32,7 @@ Take a look at the CRM file as an example. In addition to providing the descript
 
 
 1.After install module Activate the developer mode (with assets) from Settings and Update Apps List from navbar.
-<img src='https://www.odoo.com/documentation/17.0/_images/settings.png'>
+<img src='https://www.odoo.com/documentation/17.0/_images/settings.png'><br>
 2.Demo Manifest:<a href='https://www.odoo.com/documentation/17.0/developer/reference/backend/module.html#reference-module-manifest'> Read the article.</a>
 
 Make sure you add 'depends': ['base'].<br>
