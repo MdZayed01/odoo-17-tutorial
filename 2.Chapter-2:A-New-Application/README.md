@@ -39,6 +39,6 @@ Make sure you add 'depends': ['base'].<br>
 
 3.Add custom model pwd in odoo.conf.
 see <br>
-<a src='../demo-odoo.conf'>demo-odoo.conf</a>
+<a href="../demo-odoo.conf">demo-odoo.conf</a>
 <br>
 Yes, now we can create our first model 🤗.
