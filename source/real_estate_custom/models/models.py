@@ -23,7 +23,6 @@ class RealEstateProperty(models.Model):
     _name = 'real.estate.custom.property'
     _description = 'Real Estate Property'
 
-
     name = fields.Char(string='Name', required=True)
     description = fields.Text(string='Description')
     postcode = fields.Char(string='Postcode')
