@@ -6,22 +6,22 @@ Welcome to the Odoo 17 tutorial repository. This tutorial is based on the Odoo 1
 
 ## Table of Contents
 
-0. [Source install](0.Source-install/README.md)
-1. [Chapter 1: Architecture Overview](1.Chapter-1%3AArchitecture-Overview/README.md)
-2. [Chapter 2: A New Application](2.Chapter-2%3AA-New-Application/README.md)
-3. [Chapter 3: Models And Basic Fields](3.Chapter-3%3AModels-And-Basic-Fields/README.md)
-4. [Chapter 4: Security - A Brief Introduction](4.Chapter-4%3A-Security-A-Brief-Introduction/README.md)
-5. [Chapter 5: Finally, Some UI To Play With](5.Chapter-5%3AFinally,Some-UI-To-Play-With/README.md)
-6. [Chapter 6: Basic Views](6.Chapter-6%3ABasic-Views/README.md)
-7. [Chapter 7: Relations Between Models](7.Chapter-7%3ARelations-Between-Models/README.md)
-8. [Chapter 8: Computed Fields And Onchanges](8.Chapter-8%3AComputed-Fields-And-Onchanges/README.md)
-9. [Chapter 9: Ready For Some Action](9.Chapter-9%3AReady-For-Some-Action/README.md)
-10. [Chapter 10: Constraints](10.Chapter-10%3AConstraints/README.md)
-11. [Chapter 11: Add The Sprinkles](11.Chapter-11%3AAdd-The-Sprinkles/README.md)
-12. [Chapter 12: Inheritance](12.Chapter-12%3AInheritance/README.md)
-13. [Chapter 13: Interact With Other Modules](13.Chapter-13%3AInteract-With-Other-Modules/README.md)
-14. [Chapter 14: A Brief History Of QWeb](14.Chapter-14%3AA-Brief-History-Of-QWeb/README.md)
-15. [Chapter 15: The Final Word](15.Chapter-15%3AThe-final-word/README.md)
+0. [Source install](doc/0.Source-install.md)
+1. [Chapter 1: Architecture Overview](doc/1.Chapter-1%3AArchitecture-Overview.md)
+2. [Chapter 2: A New Application](doc/2.Chapter-2%3AA-New-Application.md)
+3. [Chapter 3: Models And Basic Fields](doc/3.Chapter-3%3AModels-And-Basic-Fields.md)
+4. [Chapter 4: Security - A Brief Introduction](doc/4.Chapter-4%3A-Security-A-Brief-Introduction.md)
+5. [Chapter 5: Finally, Some UI To Play With](doc/5.Chapter-5%3AFinally,Some-UI-To-Play-With.md)
+6. [Chapter 6: Basic Views](doc/6.Chapter-6%3ABasic-Views.md)
+7. [Chapter 7: Relations Between Models](doc/7.Chapter-7%3ARelations-Between-Models.md)
+8. [Chapter 8: Computed Fields And Onchanges](doc/8.Chapter-8%3AComputed-Fields-And-Onchanges.md)
+9. [Chapter 9: Ready For Some Action](doc/9.Chapter-9%3AReady-For-Some-Action.md)
+10. [Chapter 10: Constraints](doc/10.Chapter-10%3AConstraints.md)
+11. [Chapter 11: Add The Sprinkles](doc/11.Chapter-11%3AAdd-The-Sprinkles.md)
+12. [Chapter 12: Inheritance](doc/12.Chapter-12%3AInheritance.md)
+13. [Chapter 13: Interact With Other Modules](doc/13.Chapter-13%3AInteract-With-Other-Modules.md)
+14. [Chapter 14: A Brief History Of QWeb](doc/14.Chapter-14%3AA-Brief-History-Of-QWeb.md)
+15. [Chapter 15: The Final Word](doc/15.Chapter-15%3AThe-final-word.md)
 
 
 If you have any questions or just want to say hi, feel free to contact me at `mdzayed2019@gmail.com` 
