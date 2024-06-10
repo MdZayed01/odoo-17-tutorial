@@ -1,5 +1,11 @@
+<?xml version="1.0"?>
 <odoo>
   <data>
+  <record id="real_estate_custom_property_action" model="real_estate_custom.real.estate.custom.property">
+    <field name="name">Name</field>
+    <field name="res_model">test_model</field>
+    <field name="view_mode">tree,form</field>
+  </record>
     <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="real_estate_custom.list">

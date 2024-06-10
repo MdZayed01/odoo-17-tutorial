@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<record id="real_estate_custom_view_form" model="real.estate.custom.property">
+    <field name="name">Real estate custom</field>
+    <field name="model">real.estate.custom.property</field>
+    <field name="arch" type="xml">
+        <form string="Real estate custom">
+            <sheet>
+                <group>
+                    <field name="name" />
+                    <field name="description" />
+                    <field name="postcode" />
+                    <field name="date_availability" />
+                    <field name="expected_price" />
+                    <field name="selling_price" />
+                    <field name="bedrooms" />
+                    <field name="living_area" />
+                    <field name="facades" />
+                    <field name="garage" />
+                    <field name="garden" />
+                    <field name="garden_area" />
+                    <field name="garden_orientation" />                   
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="real_estate_custom_property_view_tree" model="real.estate.custom.property">
+    <field name="name">Real estate tree view</field>
+    <field name="model">real.estate.custom.property</field>
+    <field name="arch" type="xml">
+        <tree string="All Real estate">
+                    <field name="name" />
+                    <field name="description" />
+                    <field name="postcode" />
+                    <field name="date_availability" />
+                    <field name="expected_price" />
+                    <field name="selling_price" />
+                    <field name="bedrooms" />
+                    <field name="living_area" />
+                    <field name="facades" />
+                    <field name="garage" />
+                    <field name="garden" />
+                    <field name="garden_area" />
+                    <field name="garden_orientation" />                   
+        </tree>
+    </field>
+</record>
+<record id="real_estate_custom_action" model="real.estate.custom.property">
+    <field name="name">Real estate Action</field>
+    <field name="res_model">real.estate.custom.property</field>
+    <field name="view_mode">tree,form</field>
+</record>

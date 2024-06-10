@@ -41,6 +41,9 @@ class RealEstateProperty(models.Model):
         ('east', 'East'),
         ('west', 'West'),
     ], string='Garden Orientation')
+    
+    last_seen = fields.Datetime("Last Seen", default=fields.Datetime.now)
+
 
 
 
