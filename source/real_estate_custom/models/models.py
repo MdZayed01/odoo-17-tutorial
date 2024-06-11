@@ -18,6 +18,10 @@
 #             record.value2 = float(record.value) / 100
 
 from odoo import models, fields
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
+
 
 class RealEstateProperty(models.Model):
     _name = 'real.estate.custom.property'
@@ -26,10 +30,10 @@ class RealEstateProperty(models.Model):
     name = fields.Char(string='Name', required=True)
     description = fields.Text(string='Description')
     postcode = fields.Char(string='Postcode')
-    date_availability = fields.Date(string='Date of Availability')
-    expected_price = fields.Float(string='Expected Price', required=True)
-    selling_price = fields.Float(string='Selling Price')
-    bedrooms = fields.Integer(string='Bedrooms')
+    date_availability = fields.Date(string='Date of Availability',default =fields.Date.today() + relativedelta(months=3))
+    expected_price = fields.Float(string='Expected Price', required=True,default=0.0,copy=False)
+    selling_price = fields.Float(string='Selling Price',readonly=True,copy=False)
+    bedrooms = fields.Integer(string='Bedrooms',default = 2)
     living_area = fields.Integer(string='Living Area (sqm)')
     facades = fields.Integer(string='Number of Facades')
     garage = fields.Boolean(string='Garage')
@@ -43,7 +47,18 @@ class RealEstateProperty(models.Model):
     ], string='Garden Orientation')
     
     last_seen = fields.Datetime("Last Seen", default=fields.Datetime.now)
-
+    
+    active = fields.Boolean(default = False,string='Active')
+    state = fields.Selection(string='State',required=True, selection=[
+        ('new', 'New'), 
+        ('offer_received', 'Offer Received'),
+        ('offer_accepted', 'Offer Accepted'),
+        ('sold', 'Sold'),
+        ('canceled', 'Canceled'),
+        ]
+        ,
+        default = 'new'                     
+        )
 
 
 

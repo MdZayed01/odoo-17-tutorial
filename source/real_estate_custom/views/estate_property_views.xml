@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
-<record id="real_estate_custom_view_form" model="real.estate.custom.property">
-    <field name="name">Real estate custom</field>
+<odoo>
+
+<record id="real_estate_custom_view_form" model="ir.ui.view">
+    <field name="name">real.estate.custom.property.form</field>
     <field name="model">real.estate.custom.property</field>
     <field name="arch" type="xml">
         <form string="Real estate custom">
@@ -18,36 +20,50 @@
                     <field name="garage" />
                     <field name="garden" />
                     <field name="garden_area" />
-                    <field name="garden_orientation" />                   
+                    <field name="garden_orientation" />    
+                    <field name="state" />
+                    <field name="active" />                       
                 </group>
             </sheet>
         </form>
     </field>
 </record>
 
-<record id="real_estate_custom_property_view_tree" model="real.estate.custom.property">
-    <field name="name">Real estate tree view</field>
+<record id="real_estate_custom_property_tree" model="ir.ui.view">
+    <field name="name">real.estate.custom.property.tree</field>
     <field name="model">real.estate.custom.property</field>
     <field name="arch" type="xml">
         <tree string="All Real estate">
-                    <field name="name" />
-                    <field name="description" />
-                    <field name="postcode" />
-                    <field name="date_availability" />
-                    <field name="expected_price" />
-                    <field name="selling_price" />
-                    <field name="bedrooms" />
-                    <field name="living_area" />
-                    <field name="facades" />
-                    <field name="garage" />
-                    <field name="garden" />
-                    <field name="garden_area" />
-                    <field name="garden_orientation" />                   
+            <field name="name" />
+            <field name="description" />
+            <field name="postcode" />
+            <field name="date_availability" />
+            <field name="bedrooms" /> 
+            <field name="last_seen" /> 
+            <field name="state" />                   
         </tree>
     </field>
 </record>
-<record id="real_estate_custom_action" model="real.estate.custom.property">
-    <field name="name">Real estate Action</field>
+
+<record id="real_estate_custom_search" model="ir.ui.view">
+    <field name="name">real.estate.custom.search</field>
+    <field name="model">real.estate.custom.property</field>
+    <field name="arch" type="xml">
+        <search string="Real Estate Custom Search">
+            <field name="name"/>
+            <field name="state"/>
+            <field name="postcode"/>
+            <field name="selling_price"/>
+            <filter name="state" domain="[('state', 'in', ['New', 'Offer Received'])]"/>
+            <filter name="postcode" string="Postcode" context="{'group_by': 'postcode'}" />
+        </search>   
+    </field>
+</record>
+
+
+<record id="real_estate_custom_action" model="ir.actions.act_window">
+    <field name="name">Real estate Custom</field>
     <field name="res_model">real.estate.custom.property</field>
     <field name="view_mode">tree,form</field>
 </record>
+</odoo>
