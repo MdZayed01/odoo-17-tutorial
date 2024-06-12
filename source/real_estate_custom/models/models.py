@@ -28,6 +28,23 @@ class RealEstateProperty(models.Model):
     _description = 'Real Estate Property'
 
     name = fields.Char(string='Name', required=True)
+    property_type = fields.Many2one(comodel_name='real.estate.custom.property.type',string='Property Type')
+    buyer_id = fields.Many2one(
+        "res.partner",
+        readonly=True,
+        copy=False,
+        string="Buyer"
+    )
+    seller_id = fields.Many2one(
+        "res.users",
+        string="Seller",
+        default=lambda self: self.env.user
+    )
+    tag_id = fields.Many2many(
+        "real.estate.custom.tag",
+        string="Tags"
+    )
+
     description = fields.Text(string='Description')
     postcode = fields.Char(string='Postcode')
     date_availability = fields.Date(string='Date of Availability',default =fields.Date.today() + relativedelta(months=3))
@@ -62,6 +79,20 @@ class RealEstateProperty(models.Model):
 
 
 
+class RealEstatePropertyType(models.Model):
+    _name = 'real.estate.custom.property.type'
+    # _inherit = 'mail.thread'
+    _description = 'Real Estate Property Type'
+    name = fields.Char(string='Name', required=True)
 
+    
+class EstatePropertyTag(models.Model):
+    _name = "real.estate.custom.tag"
+    _inherit = 'mail.thread'
+    _description = "Estate Property Tag Model"
+    _order = "name"
 
-
+    name = fields.Char(
+        required=True,
+        tracking=True
+    )

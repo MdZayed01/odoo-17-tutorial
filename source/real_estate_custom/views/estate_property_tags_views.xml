@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="real_estate_custom_tags_view_form" model="ir.ui.view">
+        <field name="name">real.estate.custom.tag.form</field>
+        <field name="model">real.estate.custom.tag</field>
+        <field name="arch" type="xml">
+            <form string="Real estate custom Type">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+            </form>
+           
+
+
+        </field>
+    </record>
+
+    <record id="real_estate_custom_tags_property_tree" model="ir.ui.view">
+        <field name="name">real.estate.custom.tag.tree</field>
+        <field name="model">real.estate.custom.tag</field>
+        <field name="arch" type="xml">
+            <tree string="All Real estate Type">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- <record id="real_estate_custom_tags_search" model="ir.ui.view">
+    <field name="name">real.estate.custom.search</field>
+    <field name="model">real.estate.custom.tag</field>
+    <field name="arch" type="xml">
+        <search string="Real Estate Custom Search">
+            <field name="name"/>
+            <field name="state"/>
+            <field name="postcode"/>
+            <field name="selling_price"/>
+            <filter name="state" domain="[('state', 'in', ['New', 'Offer Received'])]"/>
+            <filter name="postcode" string="Postcode" context="{'group_by': 'postcode'}" />
+        </search>   
+    </field>
+</record> -->
+
+
+    <record id="real_estate_custom_tags_action" model="ir.actions.act_window">
+        <field name="name">Property Tag</field>
+        <field name="res_model">real.estate.custom.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

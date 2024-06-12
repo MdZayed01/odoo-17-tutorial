@@ -5,6 +5,10 @@
     <menuitem id="real_estate_custom_main_menu" name="Main menu">
         <menuitem id="real_estate_custom_menu" action="real_estate_custom_action"/>
     </menuitem>
+   <menuitem id="settings_menu" name="Settings">
+        <menuitem id="real_estate_custom_type_menu" action="real_estate_custom.real_estate_custom_type_action"/>
+        <menuitem id="real_estate_custom_tags_menu" action="real_estate_custom.real_estate_custom_tags_action"/>
+    </menuitem>
 </menuitem>
 
 
