@@ -17,7 +17,7 @@
 #         for record in self:
 #             record.value2 = float(record.value) / 100
 
-from odoo import models, fields
+from odoo import models, fields,api
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -79,6 +79,23 @@ class RealEstateProperty(models.Model):
         default = 'new'                     
         )
 
+    total_area = fields.Integer(string="Total area",compute="_compute_total_area")
+    best_price = fields.Integer(string="Best price",compute="_compute_best_price")
+    
+    @api.depends('garden_area','living_area')
+    def _compute_total_area(self):
+        for obj in self:
+            obj.total_area = self.garden_area + self.living_area
+    @api.depends('garden_area','living_area')
+    def _compute_best_price(self):
+        for obj in self:
+            if obj.best_price:
+                
+                obj.best_price = max(obj.offer_ids.map('offer_price'))
+                
+            else:
+                obj.best_price = 0 
+    
 
 
 class RealEstatePropertyType(models.Model):

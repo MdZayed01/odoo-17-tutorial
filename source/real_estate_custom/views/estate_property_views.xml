@@ -8,31 +8,45 @@
             <form string="Real Estate Custom">
                 <sheet>
                     <group>
-                        <field name="name" />
-                        <field name="tag_ids" widget="many2many_tags" />
-                        <field name="property_type_id" />
-                        <field name="seller_id" />
-                        <field name="postcode" />
-                        <field name="date_availability" />
-                        <field name="expected_price" />
-                        <field name="selling_price" />
-                        <field name="bedrooms" />
-                        <field name="living_area" />
+                        <group >
+                            <field name="name" />
+                            <field name="tag_ids" widget="many2many_tags" />
+                            <field name="property_type_id" />
+                            <field name="seller_id" />
+                            <field name="postcode" />
+                            <field name="date_availability" />
+                        </group>
+
+                        <group >
+                            <field name="expected_price" />
+                            <field name="selling_price" />
+                            <field name="bedrooms" />
+                            <field name="living_area" />
+                            <field name="garden" />
+                            <field name="garden_area" />
+                            <field name="garden_orientation" />
+                            <field name="total_area" />
+                            <field name="best_price" />
+                        </group>
+
                     </group>
                     <notebook>
                         <page name="description" string="Description">
-                                <field name="description" />
+                            <field name="description" />
                         </page>
                         <page name="Offer" string="Offer">
-                                <field name="offer_ids" />
+                            <field name="offer_ids">
+                                <tree>
+                                    <field name="name" />
+                                    <field name="offer_status" />
+                                </tree>
+                            </field>
                         </page>
                         <page name="other_info" string="Other Info">
                             <group string="Other Information">
                                 <field name="facades" />
                                 <field name="garage" />
-                                <field name="garden" />
-                                <field name="garden_area" />
-                                <field name="garden_orientation" />
+
                                 <field name="state" />
                                 <field name="active" />
                             </group>
