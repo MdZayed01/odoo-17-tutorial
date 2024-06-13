@@ -1,76 +1,85 @@
 <?xml version="1.0"?>
 <odoo>
 
-<record id="real_estate_custom_view_form" model="ir.ui.view">
-    <field name="name">real.estate.custom.property.form</field>
-    <field name="model">real.estate.custom.property</field>
-    <field name="arch" type="xml">
-        <form string="Real estate custom">
-            <sheet>
-                <group>
-                    <field name="name" />
-                    <field name="description" />
-                    <field name="property_type" />
-                    <!-- <field name="seller_id" /> -->
-                    <field name="tag_id" 
-                    widget="many2many_tags"
-                    />
-                    <field name="buyer_id"/>
-                    <field name="postcode" />
-                    <field name="date_availability" />
-                    <field name="expected_price" />
-                    <field name="selling_price" />
-                    <field name="bedrooms" />
-                    <field name="living_area" />
-                    <field name="facades" />
-                    <field name="garage" />
-                    <field name="garden" />
-                    <field name="garden_area" />
-                    <field name="garden_orientation" />    
-                    <field name="state" />
-                    <field name="active" />                       
-                </group>
-            </sheet>
-        </form>
-    </field>
-</record>
-
-<record id="real_estate_custom_property_tree" model="ir.ui.view">
-    <field name="name">real.estate.custom.property.tree</field>
-    <field name="model">real.estate.custom.property</field>
-    <field name="arch" type="xml">
-        <tree string="All Real estate">
-            <field name="name" />
-            <field name="seller_id" />
-            <field name="description" />
-            <field name="postcode" />
-            <field name="date_availability" />
-            <field name="bedrooms" /> 
-            <field name="last_seen" /> 
-            <field name="state" />                   
-        </tree>
-    </field>
-</record>
-
-<record id="real_estate_custom_search" model="ir.ui.view">
-    <field name="name">real.estate.custom.search</field>
-    <field name="model">real.estate.custom.property</field>
-    <field name="arch" type="xml">
-        <search string="Real Estate Custom Search">
-            <field name="name"/>
-            <field name="state"/>
-            <field name="postcode"/>
-            <field name="selling_price"/>
-            <filter name="state" domain="[('state', 'in', ['New', 'Offer Received'])]"/>
-            <filter name="postcode" string="Postcode" context="{'group_by': 'postcode'}" />
-        </search>   
-    </field>
-</record>
+    <record id="real_estate_custom_view_form" model="ir.ui.view">
+        <field name="name">real.estate.custom.property.form</field>
+        <field name="model">real.estate.custom.property</field>
+        <field name="arch" type="xml">
+            <form string="Real Estate Custom">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="tag_ids" widget="many2many_tags" />
+                        <field name="property_type_id" />
+                        <field name="seller_id" />
+                        <field name="postcode" />
+                        <field name="date_availability" />
+                        <field name="expected_price" />
+                        <field name="selling_price" />
+                        <field name="bedrooms" />
+                        <field name="living_area" />
+                    </group>
+                    <notebook>
+                        <page name="description" string="Description">
+                                <field name="description" />
+                        </page>
+                        <page name="Offer" string="Offer">
+                                <field name="offer_ids" />
+                        </page>
+                        <page name="other_info" string="Other Info">
+                            <group string="Other Information">
+                                <field name="facades" />
+                                <field name="garage" />
+                                <field name="garden" />
+                                <field name="garden_area" />
+                                <field name="garden_orientation" />
+                                <field name="state" />
+                                <field name="active" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
 
-<record id="real_estate_custom_action" model="ir.actions.act_window">
-    <field name="name">Real estate Custom</field>
-    <field name="res_model">real.estate.custom.property</field>
-    <field name="view_mode">tree,form</field>
-</record>
+    <record id="real_estate_custom_property_tree" model="ir.ui.view">
+        <field name="name">real.estate.custom.property.tree</field>
+        <field name="model">real.estate.custom.property</field>
+        <field name="arch" type="xml">
+            <tree string="All Real estate">
+                <field name="name" />
+                <field name="seller_id" />
+                <field name="description" />
+                <field name="postcode" />
+                <field name="date_availability" />
+                <field name="bedrooms" />
+                <field name="last_seen" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="real_estate_custom_search" model="ir.ui.view">
+        <field name="name">real.estate.custom.search</field>
+        <field name="model">real.estate.custom.property</field>
+        <field name="arch" type="xml">
+            <search string="Real Estate Custom Search">
+                <field name="name"/>
+                <field name="state"/>
+                <field name="postcode"/>
+                <field name="selling_price"/>
+                <filter name="state" domain="[('state', 'in', ['New', 'Offer Received'])]"/>
+                <filter name="postcode" string="Postcode" context="{'group_by': 'postcode'}" />
+            </search>
+        </field>
+    </record>
+
+
+    <record id="real_estate_custom_action" model="ir.actions.act_window">
+        <field name="name">Real estate Custom</field>
+        <field name="res_model">real.estate.custom.property</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 </odoo>

@@ -28,7 +28,7 @@ class RealEstateProperty(models.Model):
     _description = 'Real Estate Property'
 
     name = fields.Char(string='Name', required=True)
-    property_type = fields.Many2one(comodel_name='real.estate.custom.property.type',string='Property Type')
+    property_type_id = fields.Many2one(comodel_name='real.estate.custom.property.type',string='Property Type')
     buyer_id = fields.Many2one(
         "res.partner",
         readonly=True,
@@ -40,10 +40,12 @@ class RealEstateProperty(models.Model):
         string="Seller",
         default=lambda self: self.env.user
     )
-    tag_id = fields.Many2many(
+    tag_ids = fields.Many2many(
         "real.estate.custom.tag",
         string="Tags"
     )
+    
+    offer_ids = fields.One2many("real.estate.custom.property.offer", "property_id", string="Offer")
 
     description = fields.Text(string='Description')
     postcode = fields.Char(string='Postcode')
@@ -96,3 +98,29 @@ class EstatePropertyTag(models.Model):
         required=True,
         tracking=True
     )
+    
+class EstatePropertyOffer(models.Model):
+    _name = 'real.estate.custom.property.offer'
+    # _inherit = 'mail.thread'
+    _description = 'Real Estate Property Offer'
+    
+    name = fields.Char(
+        required=True,
+        tracking=True
+    )    
+    
+    offer_price = fields.Text(string = "Offer price")
+    offer_status = fields.Selection([("accepted","Accepted"),("refused","Refused")], string='Offer Status')
+    
+    partner_id = fields.Many2one(
+        'res.partner',
+        required=True,
+        string="Partner"
+    )
+
+    
+    property_id = fields.Many2one(
+        'real.estate.custom.property',
+        string='Property',
+        required=True, 
+        )
