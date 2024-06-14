@@ -18,7 +18,7 @@
 #             record.value2 = float(record.value) / 100
 
 from odoo import models, fields,api
-from datetime import datetime
+from datetime import datetime,timedelta
 from dateutil.relativedelta import relativedelta
 
 
@@ -86,17 +86,15 @@ class RealEstateProperty(models.Model):
     def _compute_total_area(self):
         for obj in self:
             obj.total_area = self.garden_area + self.living_area
-    @api.depends('garden_area','living_area')
+            
+            
+    @api.depends('offer_ids')
     def _compute_best_price(self):
         for obj in self:
-            if obj.best_price:
-                
-                obj.best_price = max(obj.offer_ids.map('offer_price'))
-                
+            if obj.offer_ids:
+                obj.best_price = max(obj.offer_ids.mapped('offer_price'))
             else:
                 obj.best_price = 0 
-    
-
 
 class RealEstatePropertyType(models.Model):
     _name = 'real.estate.custom.property.type'
@@ -126,7 +124,7 @@ class EstatePropertyOffer(models.Model):
         tracking=True
     )    
     
-    offer_price = fields.Text(string = "Offer price")
+    offer_price = fields.Integer()
     offer_status = fields.Selection([("accepted","Accepted"),("refused","Refused")], string='Offer Status')
     
     partner_id = fields.Many2one(
@@ -141,3 +139,29 @@ class EstatePropertyOffer(models.Model):
         string='Property',
         required=True, 
         )
+    
+    
+    validity = fields.Integer(
+        default = 7,
+        string='Validity in days(default is 7)',
+    )
+    date_deadline = fields.Date(string='Date deadline',
+                                compute='_compute_validity_date',
+                                inverse='_inverse_validity_date'
+                                )
+    
+    @api.depends("date_deadline","validity")
+    def _compute_validity_date(self):
+        for obj in self:
+            if obj.create_date:
+                obj.date_deadline = obj.create_date.date() + timedelta(days=obj.validity)
+            else:
+                obj.date_deadline = datetime.now().date() + timedelta(days=obj.validity)
+                
+    @api.depends("date_deadline","validity")
+    def _inverse_validity_date(self):
+        for obj in self:
+            if obj.date_deadline:
+                obj.validity = 30
+                 
+                
