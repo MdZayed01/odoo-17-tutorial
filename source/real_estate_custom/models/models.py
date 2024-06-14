@@ -168,4 +168,4 @@ class EstatePropertyOffer(models.Model):
     def _inverse_validity_date(self):
         for obj in self:
             if obj.create_date:
-                obj.validity = (obj.date_deadline - obj.create_date.date()).days
+                obj.validity = obj.date_deadline - obj.create_date.date()
