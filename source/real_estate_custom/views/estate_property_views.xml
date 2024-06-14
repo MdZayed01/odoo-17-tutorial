@@ -10,6 +10,7 @@
                     <group >
                         <field name="name" />
                         <field name="tag_ids" widget="many2many_tags" />
+                        <field name="buyer_id" />
                     </group>
                     <group>
 

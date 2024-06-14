@@ -31,7 +31,7 @@ class RealEstateProperty(models.Model):
     property_type_id = fields.Many2one(comodel_name='real.estate.custom.property.type',string='Property Type')
     buyer_id = fields.Many2one(
         "res.partner",
-        readonly=True,
+        # readonly=True,
         copy=False,
         string="Buyer"
     )
@@ -47,7 +47,7 @@ class RealEstateProperty(models.Model):
     
     offer_ids = fields.One2many("real.estate.custom.property.offer", "property_id", string="Offer")
 
-    description = fields.Text(string='Description')
+    description = fields.Text(string='Description',compute="_compute_description")
     postcode = fields.Char(string='Postcode')
     date_availability = fields.Date(string='Date of Availability',default =fields.Date.today() + relativedelta(months=3))
     expected_price = fields.Float(string='Expected Price', required=True,default=0.0,copy=False)
@@ -82,10 +82,17 @@ class RealEstateProperty(models.Model):
     total_area = fields.Integer(string="Total area",compute="_compute_total_area")
     best_price = fields.Integer(string="Best price",compute="_compute_best_price")
     
+    @api.depends("buyer_id")
+    def _compute_description(self):
+        for record in self:
+            record.description = "Test for partner %s" % record.buyer_id.name
+    
+    
     @api.depends('garden_area','living_area')
     def _compute_total_area(self):
         for obj in self:
             obj.total_area = self.garden_area + self.living_area
+            
             
             
     @api.depends('offer_ids')
