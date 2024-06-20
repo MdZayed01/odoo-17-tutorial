@@ -20,7 +20,7 @@
 from odoo import models, fields,api
 from datetime import datetime,timedelta,date
 from dateutil.relativedelta import relativedelta
-
+from odoo.exceptions import UserError
 
 
 class RealEstateProperty(models.Model):
@@ -68,7 +68,7 @@ class RealEstateProperty(models.Model):
     last_seen = fields.Datetime("Last Seen", default=fields.Datetime.now)
     
     active = fields.Boolean(default = False,string='Active')
-    state = fields.Selection(string='Status',required=True, selection=[
+    state = fields.Selection(string='Status',readonly=True,required=True, selection=[
         ('new', 'New'), 
         ('offer_received', 'Offer Received'),
         ('offer_accepted', 'Offer Accepted'),
@@ -115,8 +115,23 @@ class RealEstateProperty(models.Model):
                 obj.garden_area = 0
                 obj.garden_orientation = None
                 
+                
+    def action_set_sold(self):
+        for obj in self:
+            if obj.state == 'canceled':
+                raise UserError('Canceled properties cannot be sold.')
+            else:
+                obj.state = 'sold'
+        return True
+                
     
-    
+    def action_set_canceled(self):
+        for obj in self:
+            if obj.state == 'sold':
+                raise UserError("Sold properties cannot be canceled.")
+            else:
+                obj.state = 'canceled'
+        return True
 
 class RealEstatePropertyType(models.Model):
     _name = 'real.estate.custom.property.type'
@@ -187,3 +202,18 @@ class EstatePropertyOffer(models.Model):
                 obj.validity = (obj.date_deadline - datetime.now().date()).days
             else:
                 obj.validity = 7
+                
+    def action_offer_accept(self):
+        for obj in self:      
+            obj.offer_status = "accepted"
+            obj.property_id.buyer_id = obj.partner_id.id
+            obj.property_id.selling_price = obj.offer_price
+            obj.property_id.state = "offer_accepted"
+    
+    
+    def action_offer_refused(self):
+        for obj in self:
+            obj.offer_status = "refused"
+            obj.property_id.buyer_id = None
+            obj.property_id.selling_price = None
+            obj.property_id.state = "new"
