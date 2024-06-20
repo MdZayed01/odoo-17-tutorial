@@ -18,7 +18,7 @@
 #             record.value2 = float(record.value) / 100
 
 from odoo import models, fields,api
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta,date
 from dateutil.relativedelta import relativedelta
 
 
@@ -37,7 +37,7 @@ class RealEstateProperty(models.Model):
     )
     seller_id = fields.Many2one(
         "res.users",
-        string="Seller",
+        string="Salesman",
         default=lambda self: self.env.user
     )
     tag_ids = fields.Many2many(
@@ -68,7 +68,7 @@ class RealEstateProperty(models.Model):
     last_seen = fields.Datetime("Last Seen", default=fields.Datetime.now)
     
     active = fields.Boolean(default = False,string='Active')
-    state = fields.Selection(string='State',required=True, selection=[
+    state = fields.Selection(string='Status',required=True, selection=[
         ('new', 'New'), 
         ('offer_received', 'Offer Received'),
         ('offer_accepted', 'Offer Accepted'),
@@ -102,6 +102,21 @@ class RealEstateProperty(models.Model):
                 obj.best_price = max(obj.offer_ids.mapped('offer_price'))
             else:
                 obj.best_price = 0 
+                
+                
+    @api.onchange('garden')
+    def _onchange_garden(self):
+        for obj in self:
+            if obj.garden:
+                obj.garden_area = 10
+                obj.garden_orientation = "north"
+           
+            else:
+                obj.garden_area = 0
+                obj.garden_orientation = None
+                
+    
+    
 
 class RealEstatePropertyType(models.Model):
     _name = 'real.estate.custom.property.type'
@@ -166,7 +181,9 @@ class EstatePropertyOffer(models.Model):
                 obj.date_deadline = datetime.now().date() + timedelta(days=obj.validity)
 
     def _inverse_validity_date(self):
-        breakpoint()
+        # breakpoint()
         for obj in self:
-            if obj.create_date:
-                obj.validity = obj.date_deadline - obj.create_date.date()
+            if obj.date_deadline:
+                obj.validity = (obj.date_deadline - datetime.now().date()).days
+            else:
+                obj.validity = 7
