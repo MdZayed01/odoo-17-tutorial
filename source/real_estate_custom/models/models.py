@@ -21,6 +21,8 @@ from odoo import models, fields,api
 from datetime import datetime,timedelta,date
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare,float_is_zero
 
 
 class RealEstateProperty(models.Model):
@@ -51,7 +53,7 @@ class RealEstateProperty(models.Model):
     postcode = fields.Char(string='Postcode')
     date_availability = fields.Date(string='Date of Availability',default =fields.Date.today() + relativedelta(months=3))
     expected_price = fields.Float(string='Expected Price', required=True,default=0.0,copy=False)
-    selling_price = fields.Float(string='Selling Price',readonly=True,copy=False)
+    selling_price = fields.Float(string='Selling Price',copy=False)
     bedrooms = fields.Integer(string='Bedrooms',default = 2)
     living_area = fields.Integer(string='Living Area (sqm)')
     facades = fields.Integer(string='Number of Facades')
@@ -132,12 +134,38 @@ class RealEstateProperty(models.Model):
             else:
                 obj.state = 'canceled'
         return True
+    
+    _sql_constraints = [
+        (
+        'check_expected_price', 'CHECK(expected_price > 0)',
+        'A property expected price must be strictly positive!!'
+        ),                 
+        (
+        'check_selling_price', 'CHECK(selling_price > 0)',
+            'A property selling price must be strictly positive!!'
+        )
+    ]
+    
+    @api.constrains('expected_price', 'selling_price')
+    def _check_prices(self):
+        for record in self:
+            threshold_price = record.expected_price * 0.9
+            if float_compare(record.selling_price, threshold_price, precision_digits=2) < 0 and not float_is_zero(record.selling_price, precision_digits=2):
+                raise ValidationError("The selling price cannot be lower than 90% of the expected price.") 
 
 class RealEstatePropertyType(models.Model):
     _name = 'real.estate.custom.property.type'
     # _inherit = 'mail.thread'
     _description = 'Real Estate Property Type'
     name = fields.Char(string='Name', required=True)
+    
+    _sql_constraints = [
+        (
+            'property_type_unique',
+            'unique(name)',
+            'A property type name must be unique!!!!'
+        ),
+    ]    
 
     
 class EstatePropertyTag(models.Model):
@@ -150,6 +178,15 @@ class EstatePropertyTag(models.Model):
         required=True,
         tracking=True
     )
+    
+    _sql_constraints = [
+        (
+            'property_tag_unique',
+            'unique(name)',
+            'A property tag name must be unique!!!!'
+        ),
+    ]    
+
     
 class EstatePropertyOffer(models.Model):
     _name = 'real.estate.custom.property.offer'
@@ -217,3 +254,12 @@ class EstatePropertyOffer(models.Model):
             obj.property_id.buyer_id = None
             obj.property_id.selling_price = None
             obj.property_id.state = "new"
+            
+            
+    _sql_constraints = [
+        (
+            'offer_price_greater_than_zero',
+            'CHECK(offer_price>0)',
+            'An offer price must be strictly positive!!!!'
+        ),
+    ]    
