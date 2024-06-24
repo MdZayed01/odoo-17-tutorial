@@ -1,32 +1,40 @@
 <?xml version="1.0"?>
 <odoo>
 
-<record id="real_estate_custom_type_view_form" model="ir.ui.view">
-    <field name="name">real.estate.custom.property.type.form</field>
-    <field name="model">real.estate.custom.property.type</field>
-    <field name="arch" type="xml">
-        <form string="Real estate custom Type">
-            <sheet>
-                <group>
-                    <field name="name" />                     
-                </group>
-            </sheet>
-            
-        </form>
-    </field>
-</record>
+    <record id="real_estate_custom_type_view_form" model="ir.ui.view">
+        <field name="name">real.estate.custom.property.type.form</field>
+        <field name="model">real.estate.custom.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Real estate custom Type">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="property_ids">
+                            <tree>
+                                <field name="name" width="60%"/>
+                                <field name="expected_price" width="20%"/>
+                                <field name="state" width="20%" />
+                            </tree>
 
-<record id="real_estate_custom_type_property_tree" model="ir.ui.view">
-    <field name="name">real.estate.custom.property.type.tree</field>
-    <field name="model">real.estate.custom.property.type</field>
-    <field name="arch" type="xml">
-        <tree string="All Real estate Type">
-            <field name="name" />
-        </tree>
-    </field>
-</record>
+                        </field >
+                    </group>
+                </sheet>
 
-<!-- <record id="real_estate_custom_type_search" model="ir.ui.view">
+            </form>
+        </field>
+    </record>
+
+    <record id="real_estate_custom_type_property_tree" model="ir.ui.view">
+        <field name="name">real.estate.custom.property.type.tree</field>
+        <field name="model">real.estate.custom.property.type</field>
+        <field name="arch" type="xml">
+            <tree string="All Real estate Type">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- <record id="real_estate_custom_type_search" model="ir.ui.view">
     <field name="name">real.estate.custom.search</field>
     <field name="model">real.estate.custom.property.type</field>
     <field name="arch" type="xml">
@@ -42,9 +50,9 @@
 </record> -->
 
 
-<record id="real_estate_custom_type_action" model="ir.actions.act_window">
-    <field name="name">Property Type</field>
-    <field name="res_model">real.estate.custom.property.type</field>
-    <field name="view_mode">tree,form</field>
-</record>
+    <record id="real_estate_custom_type_action" model="ir.actions.act_window">
+        <field name="name">Property Type</field>
+        <field name="res_model">real.estate.custom.property.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 </odoo>

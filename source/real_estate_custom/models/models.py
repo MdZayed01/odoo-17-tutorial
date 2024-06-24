@@ -159,6 +159,8 @@ class RealEstatePropertyType(models.Model):
     _description = 'Real Estate Property Type'
     name = fields.Char(string='Name', required=True)
     
+    property_ids = fields.One2many('real.estate.custom.property', 'property_type_id', string='Property Ids')
+    
     _sql_constraints = [
         (
             'property_type_unique',

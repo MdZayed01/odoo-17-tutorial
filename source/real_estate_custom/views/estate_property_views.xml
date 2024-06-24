@@ -19,6 +19,7 @@
                     string="Sold" 
                     class="btn btn-primary"
                     />
+                <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
                     <group >
