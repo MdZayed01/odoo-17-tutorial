@@ -28,6 +28,7 @@ from odoo.tools.float_utils import float_compare,float_is_zero
 class RealEstateProperty(models.Model):
     _name = 'real.estate.custom.property'
     _description = 'Real Estate Property'
+    _order = "id desc"
 
     name = fields.Char(string='Name', required=True)
     property_type_id = fields.Many2one(comodel_name='real.estate.custom.property.type',string='Property Type')
@@ -137,11 +138,11 @@ class RealEstateProperty(models.Model):
     
     _sql_constraints = [
         (
-        'check_expected_price', 'CHECK(expected_price > 0)',
+        'check_expected_price', 'CHECK(expected_price >= 0)',
         'A property expected price must be strictly positive!!'
         ),                 
         (
-        'check_selling_price', 'CHECK(selling_price > 0)',
+        'check_selling_price', 'CHECK(selling_price >= 0)',
             'A property selling price must be strictly positive!!'
         )
     ]
@@ -157,10 +158,11 @@ class RealEstatePropertyType(models.Model):
     _name = 'real.estate.custom.property.type'
     # _inherit = 'mail.thread'
     _description = 'Real Estate Property Type'
+    _order = "name"
     name = fields.Char(string='Name', required=True)
     
     property_ids = fields.One2many('real.estate.custom.property', 'property_type_id', string='Property Ids')
-    
+    sequence = fields.Integer('Sequence', default=1, help="Used to order stages. Lower is better.")
     _sql_constraints = [
         (
             'property_type_unique',
@@ -178,8 +180,10 @@ class EstatePropertyTag(models.Model):
 
     name = fields.Char(
         required=True,
-        tracking=True
+
     )
+    
+    color = fields.Integer("Color")
     
     _sql_constraints = [
         (
@@ -194,10 +198,10 @@ class EstatePropertyOffer(models.Model):
     _name = 'real.estate.custom.property.offer'
     # _inherit = 'mail.thread'
     _description = 'Real Estate Property Offer'
+    _order = "offer_price desc"
     
     name = fields.Char(
         required=True,
-        tracking=True
     )    
     
     offer_price = fields.Integer()

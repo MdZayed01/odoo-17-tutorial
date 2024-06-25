@@ -30,6 +30,7 @@
         <field name="arch" type="xml">
             <tree string="All Real estate Type">
                 <field name="name" />
+                <field name="sequence" />
             </tree>
         </field>
     </record>

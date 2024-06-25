@@ -6,43 +6,29 @@
         <field name="arch" type="xml">
             <form string="Real Estate Custom">
                 <header>
-                    <button 
-                    name="action_set_canceled" 
-                    type="object" 
-                    string="Cancel" 
-                    class="btn btn-secondary"
-                    
-                    />
-                    <button 
-                    name="action_set_sold" 
-                    type="object" 
-                    string="Sold" 
-                    class="btn btn-primary"
-                    />
-                <field name="state" widget="statusbar" />
+                    <button name="action_set_canceled" type="object" string="Cancel" class="btn btn-secondary"
+                    invisible = "state == 'sold' or state == 'canceled' or state == 'offer_accepted'" />
+                    <button name="action_set_sold" type="object" string="Sold" class="btn btn-primary"
+                    invisible = "state == 'sold' or state == 'canceled' " />
+                    <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
                     <group >
                         <field name="state" />
                         <field name="name" />
-                        <field name="tag_ids" widget="many2many_tags" />
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" />
                     </group>
                     <group>
                         <group >
                             <field name="property_type_id" />
                             <field name="postcode" />
                             <field name="date_availability" />
+
+                        </group>
+                        <group >
                             <field name="expected_price" />
                             <field name="selling_price" />
                             <field name="best_price" />
-                        </group>
-                        <group >
-                            <field name="bedrooms" />
-                            <field name="living_area" />
-                            <field name="garden" />
-                            <field name="garden_area" />
-                            <field name="garden_orientation" />
-                            <field name="total_area" />
                         </group>
                     </group>
                     <notebook>
@@ -52,15 +38,22 @@
                                 <field name="facades" />
                                 <field name="garage" />
                                 <field name="active" />
+                                <field name="bedrooms" />
+                                <field name="living_area" />
+                                <field name="garden" />
+                                <field name="garden_area" invisible ="garden ==False"/>
+                                <field name="garden_orientation"  invisible ="garden ==False"/>
+                                <field name="total_area" />
                             </group>
                         </page>
                         <page name="Offer" string="Offer">
                             <field name="offer_ids">
-                                <tree>
+                                <tree editable="top" decoration-success="offer_status=='accepted' " decoration-danger="offer_status=='refused' ">
+                                    <field name="name" width="20%"/>
                                     <field name="offer_price" width="20%"/>
                                     <field name="partner_id" width="15%"/>
                                     <field name="validity" width="30%" />
-                                    <field name="date_deadline" width="25%"/>
+                                    <field name="date_deadline" width="25%" invisible='1'/>
                                     <button name="action_offer_accept" type="object" string="✔️"/>
                                     <button name="action_offer_refused" type="object" string="❌"/>
                                     <field name="offer_status"/>
@@ -82,7 +75,7 @@
         <field name="name">real.estate.custom.property.tree</field>
         <field name="model">real.estate.custom.property</field>
         <field name="arch" type="xml">
-            <tree string="All Real estate">
+            <tree string="All Real estate" decoration-success="state=='offer_accepted' or state=='offer_received' " decoration-bf="state=='offer_accepted' " decoration-muted="state=='sold' ">
                 <field name="name" />
                 <field name="seller_id" />
                 <field name="description" />
@@ -100,10 +93,15 @@
         <field name="arch" type="xml">
             <search string="Real Estate Custom Search">
                 <field name="name"/>
-                <field name="state"/>
                 <field name="postcode"/>
+                <field name="bedrooms"/>
+                <field name="living_area"  
+                filter_domain="[('living_area', '>=' , self )]"
+                />
                 <field name="selling_price"/>
-                <filter name="state" domain="[('state', 'in', ['New', 'Offer Received'])]"/>
+                <field name="property_type_id"/>
+                <field name="date_availability"/>
+                <filter name="state" string="Available" domain="[('state', 'in', ['new', 'offer_received'])]"/>
                 <filter name="postcode" string="Postcode" context="{'group_by': 'postcode'}" />
             </search>
         </field>
