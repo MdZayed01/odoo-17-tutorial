@@ -9,7 +9,6 @@
                 <sheet>
                     <group>
                         <field name="name" />
-                        <field name="property_type_id" width="20%" />
                         <field name="property_ids">
                             <tree>
                                 <field name="name" width="60%"/>
