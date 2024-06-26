@@ -170,6 +170,8 @@ class RealEstatePropertyType(models.Model):
     property_ids = fields.One2many('real.estate.custom.property', 'property_type_id', string='Property Ids')
     sequence = fields.Integer('Sequence', default=1, help="Used to order stages. Lower is better.")
     
+    offer_ids = fields.One2many('real.estate.custom.property.offer', 'property_type_id', string='Offers')
+    offer_count = fields.Integer(string='Offer Count', compute='_compute_offer_count')
 
     _sql_constraints = [
         (
@@ -178,6 +180,12 @@ class RealEstatePropertyType(models.Model):
             'A property type name must be unique!!!!'
         ),
     ]    
+
+    @api.depends('offer_ids')
+    def _compute_offer_count(self):
+        for record in self:
+            record.offer_count = len(record.offer_ids)
+
 
     
 class EstatePropertyTag(models.Model):

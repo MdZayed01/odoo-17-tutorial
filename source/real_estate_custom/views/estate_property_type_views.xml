@@ -6,15 +6,18 @@
         <field name="model">real.estate.custom.property.type</field>
         <field name="arch" type="xml">
             <form string="Real estate custom Type">
+               
                 <sheet>
                     <group>
                         <field name="name" />
+                        <field name="offer_ids" />
+                        <field name="offer_count" />
                         <field name="property_ids">
                             <tree>
                                 <field name="name" width="60%"/>
                                 <field name="expected_price" width="20%"/>
                                 <field name="state" width="20%" />
-                                
+
                             </tree>
 
                         </field >
