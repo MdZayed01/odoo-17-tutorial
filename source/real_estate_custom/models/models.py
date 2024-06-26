@@ -230,6 +230,11 @@ class EstatePropertyOffer(models.Model):
                                 inverse='_inverse_validity_date'
                                 )
     
+    property_type_id = fields.Many2one(
+        'partner_id.property_type_id',
+        string='Property type',
+        )
+    
     @api.depends("validity")
     def _compute_validity_date(self):
         for obj in self:
