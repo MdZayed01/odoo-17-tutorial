@@ -49,11 +49,10 @@
                         <page name="Offer" string="Offer">
                             <field name="offer_ids">
                                 <tree editable="top" decoration-success="offer_status=='accepted' " decoration-danger="offer_status=='refused' ">
-                                    <field name="name" width="20%"/>
-                                    <field name="offer_price" width="20%"/>
-                                    <field name="partner_id" width="15%"/>
-                                    <field name="validity" width="30%" />
-                                    <field name="date_deadline" width="25%" invisible='1'/>
+                                    <field name="name" width="40%"/>
+                                    <field name="offer_price" width="30%"/>
+                                    <field name="partner_id" width="40%"/>
+                                    <field name="validity" width="40%" />
                                     <button name="action_offer_accept" type="object" string="✔️"/>
                                     <button name="action_offer_refused" type="object" string="❌"/>
                                     <field name="offer_status"/>

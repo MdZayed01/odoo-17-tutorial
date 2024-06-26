@@ -153,6 +153,17 @@ class RealEstateProperty(models.Model):
             threshold_price = record.expected_price * 0.9
             if float_compare(record.selling_price, threshold_price, precision_digits=2) < 0 and not float_is_zero(record.selling_price, precision_digits=2):
                 raise ValidationError("The selling price cannot be lower than 90% of the expected price.") 
+            
+    # @api.model
+    # def create(self, vals):
+    #     return super(RealEstateProperty, self).create(vals)
+
+    def unlink(self):
+        for record in self:
+            if record.state not in ['new', 'canceled']:
+                raise UserError('Only properties in New or Canceled state can be deleted.')
+        return super(RealEstateProperty, self).unlink()
+    
 
 class RealEstatePropertyType(models.Model):
     _name = 'real.estate.custom.property.type'
