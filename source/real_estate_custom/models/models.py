@@ -258,12 +258,16 @@ class EstatePropertyOffer(models.Model):
                 obj.validity = 7
                 
     def action_offer_accept(self):
+        total_offers = self.property_id.offer_ids
         for obj in self:      
-            obj.offer_status = "accepted"
-            obj.property_id.buyer_id = obj.partner_id.id
-            obj.property_id.selling_price = obj.offer_price
-            obj.property_id.state = "offer_accepted"
-    
+            if any( offer.offer_status=='accepted' for offer in total_offers):
+                raise UserError('Two Offers can not be acceptable')
+            else:
+                obj.offer_status = "accepted"
+                obj.property_id.buyer_id = obj.partner_id.id
+                obj.property_id.selling_price = obj.offer_price
+                obj.property_id.state = "offer_accepted"
+        
     
     def action_offer_refused(self):
         for obj in self:
