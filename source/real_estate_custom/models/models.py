@@ -85,6 +85,12 @@ class RealEstateProperty(models.Model):
     total_area = fields.Integer(string="Total area",compute="_compute_total_area")
     best_price = fields.Integer(string="Best price",compute="_compute_best_price")
     
+    
+    property_type_id = fields.Many2one(
+        "real.estate.custom.property.type",
+        string="Property Type"
+    )
+    
     @api.depends("buyer_id")
     def _compute_description(self):
         for record in self:
@@ -174,6 +180,10 @@ class RealEstatePropertyType(models.Model):
     
     property_ids = fields.One2many('real.estate.custom.property', 'property_type_id', string='Property Ids')
     sequence = fields.Integer('Sequence', default=1, help="Used to order stages. Lower is better.")
+    
+    offer_ids = fields.One2many('real.estate.custom.property.offer', 'property_type_id', string='Offers')
+    offer_count = fields.Integer(string='Offer Count', compute='_compute_offer_count')
+
     _sql_constraints = [
         (
             'property_type_unique',
@@ -182,6 +192,12 @@ class RealEstatePropertyType(models.Model):
         ),
     ]    
 
+    @api.depends('offer_ids')
+    def _compute_offer_count(self):
+        for record in self:
+            record.offer_count = len(record.offer_ids)
+    def show_offer_ids(self):
+        return {}
     
 class EstatePropertyTag(models.Model):
     _name = "real.estate.custom.tag"
@@ -241,6 +257,10 @@ class EstatePropertyOffer(models.Model):
                                 inverse='_inverse_validity_date'
                                 )
     
+    property_type_id = fields.Many2one(
+        related="property_id.property_type_id",
+        store=True
+    )
     @api.depends("validity")
     def _compute_validity_date(self):
         for obj in self:

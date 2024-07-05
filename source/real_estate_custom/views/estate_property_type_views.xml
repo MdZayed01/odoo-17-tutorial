@@ -1,19 +1,35 @@
 <?xml version="1.0"?>
 <odoo>
-
+    <record id="real_estate_offer_action" model="ir.actions.act_window">
+        <field name="name">Property Offers</field>
+        <field name="res_model">real.estate.custom.property.offer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
     <record id="real_estate_custom_type_view_form" model="ir.ui.view">
         <field name="name">real.estate.custom.property.type.form</field>
         <field name="model">real.estate.custom.property.type</field>
         <field name="arch" type="xml">
             <form string="Real estate custom Type">
+
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <!-- stat button -->
+                        <button name="%(real_estate_offer_action)d" type="action" class="oe_stat_button" icon="fa-folder-open">
+                            <field name="offer_count" widget="statinfo" string="Offers"/>
+                        </button>
+                        <!-- <field name="<offer_count" widget="statinfo" string="Offers"/> -->
+
+                    </div>
                     <group>
                         <field name="name" />
+                        <!-- <field name="offer_ids" /> -->
+                        <!-- <field name="offer_count" /> -->
                         <field name="property_ids">
                             <tree>
                                 <field name="name" width="60%"/>
                                 <field name="expected_price" width="20%"/>
                                 <field name="state" width="20%" />
+
                             </tree>
 
                         </field >
@@ -56,4 +72,6 @@
         <field name="res_model">real.estate.custom.property.type</field>
         <field name="view_mode">tree,form</field>
     </record>
+
+    
 </odoo>
