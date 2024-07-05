@@ -185,8 +185,8 @@ class RealEstatePropertyType(models.Model):
     def _compute_offer_count(self):
         for record in self:
             record.offer_count = len(record.offer_ids)
-
-
+    def show_offer_ids(self):
+        return {}
     
 class EstatePropertyTag(models.Model):
     _name = "real.estate.custom.tag"

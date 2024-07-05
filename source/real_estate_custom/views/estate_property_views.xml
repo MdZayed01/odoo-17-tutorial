@@ -8,6 +8,7 @@
                 <header>
                     <button name="action_set_canceled" type="object" string="Cancel" class="btn btn-secondary"
                     invisible = "state == 'sold' or state == 'canceled' or state == 'offer_accepted'" />
+                    
                     <button name="action_set_sold" type="object" string="Sold" class="btn btn-primary"
                     invisible = "state == 'sold' or state == 'canceled' " />
                     <field name="state" widget="statusbar" />
@@ -48,7 +49,9 @@
                         </page>
                         <page name="Offer" string="Offer">
                             <field name="offer_ids">
-                                <tree editable="top" decoration-success="offer_status=='accepted' " decoration-danger="offer_status=='refused' ">
+                                <tree editable="top" 
+                                    decoration-success="offer_status=='accepted' " 
+                                    decoration-danger="offer_status=='refused' ">
                                     <field name="name" width="20%"/>
                                     <field name="offer_price" width="20%"/>
                                     <field name="partner_id" width="15%"/>
