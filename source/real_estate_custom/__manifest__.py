@@ -27,6 +27,7 @@
         'views/estate_property_tags_views.xml',
         'views/estate_property_type_views.xml',  
         'views/estate_menus.xml',  
+        'views/res_users_inherit.xml',  
         # 'views/views.xml',
         # 'views/templates.xml',
     ],

@@ -304,3 +304,39 @@ class EstatePropertyOffer(models.Model):
             'An offer price must be strictly positive!!!!'
         ),
     ]    
+    
+    
+    @api.model
+    def create(self, vals):
+        record = super(EstatePropertyOffer, self).create(vals)
+        if record.property_id.offer_ids:
+            record.property_id.state = 'offer_received'
+        return record
+    
+    def write(self, vals):
+        result = super(EstatePropertyOffer, self).write(vals)
+        for record in self:
+            if record.property_id.offer_ids:
+                record.property_id.state = 'offer_received'
+            elif not record.property_id.offer_ids and record.property_id.state == 'offer_received':
+                record.property_id.state = 'new'
+        return result
+    
+    
+class ResUsers(models.Model):
+    _inherit = "res.users"
+
+    property_ids = fields.One2many(
+        'real.estate.custom.property',
+        'seller_id',
+        string='Properties',
+        domain="[('seller_id', '=', id)]",
+    )
+# class ResUsers(models.Model):
+#     _inherit = "res.users"
+
+#     # property_ids = fields.One2many(
+#     #     comodel_name='real.estate.custom.property',
+#     #     inverse='seller_id',
+#     #     string='Properties',
+#     # )

@@ -54,13 +54,13 @@
                                     decoration-danger="offer_status=='refused' ">
                                     <field name="name" width="20%"/>
                                     <field name="offer_price" width="20%"/>
-                                    <field name="partner_id" width="15%"/>
+                                    <field name="partner_id" width="20%"/>
                                     <field name="validity" width="30%" />
                                     <field name="date_deadline" width="25%" invisible='1'/>
                                     <!-- <field name="property_type_id" width="25%"/> -->
                                     <button name="action_offer_accept" type="object" string="✔️"/>
                                     <button name="action_offer_refused" type="object" string="❌"/>
-                                    <field name="offer_status"/>
+                                    <field name="offer_status" width="25%"/>
                                 </tree>
                             </field>
                         </page>
