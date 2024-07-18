@@ -4,12 +4,11 @@
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
-            <page name="access_rights" position="after" >
-                <page string="Properties" name="new_page">
-                    <field name="property_ids"/>
-                </page>
+           <xpath expr="//page[@name='access_rights']" position="after">
+            <page string="All properties">
+                <field name="property_ids"/>
             </page>
-            
+           </xpath>
         </field>
     </record>
 </odoo>
