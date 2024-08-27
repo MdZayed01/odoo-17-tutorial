@@ -53,12 +53,12 @@
                                     <field name="name" width="20%"/>
                                     <field name="offer_price" width="20%"/>
                                     <field name="partner_id" width="20%"/>
-                                    <field name="validity" width="30%" />
-                                    <field name="date_deadline" width="25%" invisible='1'/>
+                                    <field name="validity" width="20%" />
+                                    <field name="date_deadline" width="20%" invisible='1'/>
                                     <!-- <field name="property_type_id" width="25%"/> -->
-                                    <button name="action_offer_accept" type="object" string="✔️"/>
-                                    <button name="action_offer_refused" type="object" string="❌"/>
-                                    <field name="offer_status" width="25%"/>
+                                    <button name="action_offer_accept" type="object" string="✔️" width="20%"/>
+                                    <button name="action_offer_refused" type="object" string="❌" width="20%"/>
+                                    <field name="offer_status" width="30%"/>
                                 </tree>
                             </field>
                         </page>
@@ -106,9 +106,66 @@
             </search>
         </field>
     </record>
+    <record id="real_estate_property_quick_create_form" model="ir.ui.view">
+        <field name="name">real.estate.property.quick.create.form</field>
+        <field name="model">real.estate.custom.property</field>
+        <field name="arch" type="xml">
+            <form string="Create Property">
+                <group>
+                    <field name="name"/>
+                    <field name="stage_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_kanban_property" model="ir.ui.view">
+        <field name="name">real.estate.custom.property.kanban</field>
+        <field name="model">real.estate.custom.property</field>
+        <field name="arch" type="xml">
+            <kanban class="o_event_kanban_view" default_group_by="stage_id" quick_create_view="real_estate_property_quick_create_form" sample="1">
+                <field name="stage_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click oe_kanban_{state}">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="col-8">
+                                        <h2 class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="">
+                                        Expected Price:<field name="expected_price"/>
+                                </div>
+                                <!-- <div t-if="record.state.raw_value === 'offer_received'">
+                                    <field name="best_price"/>
+                                </div> -->
+
+                                <div class="">
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+
+
+    <record id="action_estate_property_kanban" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">real.estate.custom.property</field>
+        <field name="view_mode">kanban</field>
+    </record>
+
     <record id="real_estate_custom_action" model="ir.actions.act_window">
         <field name="name">Real estate Custom</field>
         <field name="res_model">real.estate.custom.property</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
     </record>
 </odoo>

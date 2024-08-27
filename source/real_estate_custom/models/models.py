@@ -25,6 +25,16 @@ from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare,float_is_zero
 
 
+class RealEstatePropertyStage(models.Model):
+    _name = 'real.estate.property.stage'
+    _description = 'Real Estate Property Stage'
+    _order = 'sequence, name'
+
+    name = fields.Char(required=True)
+    sequence = fields.Integer(default=1)
+    fold = fields.Boolean(string='Folded in Kanban', help='This stage is folded in the kanban view when there are no records in that stage.')
+
+
 class RealEstateProperty(models.Model):
     _name = 'real.estate.custom.property'
     _description = 'Real Estate Property'
@@ -90,6 +100,9 @@ class RealEstateProperty(models.Model):
         "real.estate.custom.property.type",
         string="Property Type"
     )
+    
+    
+    stage_id = fields.Many2one('real.estate.property.stage', string='Stage', default=lambda self: self.env['real.estate.property.stage'].search([], limit=1))
     
     @api.depends("buyer_id")
     def _compute_description(self):
